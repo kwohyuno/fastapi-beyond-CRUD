@@ -1,26 +1,26 @@
 # Updates (Feb 15 2025, by Jake HYUN OH KWON) <br>
 List of items I had to do to make everything work.<br>
-1)Fork repo <br>
-2)create and activate a virtual environment python3 -m venv env ; source env/bin/activate<br>
-3)add env on source code <br>
-4)install package (pip install -r requirements.txt)<br>
+1) Fork repo <br>
+2) create and activate a virtual environment python3 -m venv env ; source env/bin/activate<br>
+3) add env on source code <br>
+4) install package (pip install -r requirements.txt)<br>
 downloaded rust, cargo<br>
 adjusted python version to 3.11 <br>
-5)postgres setting <br>
+5) postgres setting <br>
 brew services start postgresql@14<br>
 psql -U $(whoami) <br>
 CREATE ROLE postgres WITH LOGIN SUPERUSER PASSWORD 'password'; CREATE DATABASE mydatabase WITH OWNER postgres;<br>
 alembic upgrade head<br>
-6)docker compose (docker compose up --build) <br>
-7)run application (uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload)<br>
-8)added .github > workflows > conventional-commit.yml<br>
-9)added .github > workflows > nightly-build.yml<br>
-1)added .github > workflows > release.yml <br>
+6) docker compose (docker compose up --build) <br>
+7) run application (uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload)<br>
+8) added .github > workflows > conventional-commit.yml<br>
+9) added .github > workflows > nightly-build.yml<br>
+10) added .github > workflows > release.yml <br>
             also added .releaserc.json<br>
             also downloaded semantic release (pip install python-semantic-release)<br>
             added tags ( git tag v1.0.0  ; git push origin v1.0.0 ) <br>
-11)made dockerhub, ethereal account and added secrets <br>
-12)test :<br>
+11) made dockerhub, ethereal account and added secrets <br>
+12) test :<br>
             commit and push<br>
             make pull request (on github -> test runs and PR passes)<br>
             Semantic release -> version update and creates Github Release <br>

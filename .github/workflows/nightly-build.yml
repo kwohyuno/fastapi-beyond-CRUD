@@ -21,8 +21,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t yourdockerhubusername/fastapi-beyond-crud:latest .
-          docker push yourdockerhubusername/fastapi-beyond-crud:latest
+          docker build -t hkwon7/fastapi-beyond-crud:latest .
+          docker push hkwon7/fastapi-beyond-crud:latest
 
   run-tests:
     runs-on: ubuntu-latest

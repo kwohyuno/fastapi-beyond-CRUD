@@ -16,7 +16,10 @@ jobs:
 
       - name: Get Commit Messages
         run: |
-          echo "COMMITS=$(git log --format=%s origin/${{ github.event.pull_request.base.ref }}..HEAD)" >> $GITHUB_ENV
+          COMMITS=$(git log --format=%s -n 1)
+          echo "COMMITS<<EOF" >> $GITHUB_ENV
+          echo "$COMMITS" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Validate Conventional Commit
         id: validate

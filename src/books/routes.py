@@ -94,6 +94,7 @@ async def delete_book(
     _: dict = Depends(acccess_token_bearer),
 ):
     book_to_delete = await book_service.delete_book(book_uid, session)
+    print(book_uid)
 
     if book_to_delete is None:
         raise BookNotFound()

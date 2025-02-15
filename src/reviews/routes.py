@@ -17,14 +17,12 @@ user_role_checker = Depends(RoleChecker(["user", "admin"]))
 @review_router.get("/", dependencies=[admin_role_checker])
 async def get_all_reviews(session: AsyncSession = Depends(get_session)):
     books = await review_service.get_all_reviews(session)
-
     return books
 
 
 @review_router.get("/{review_uid}", dependencies=[user_role_checker])
 async def get_review(review_uid: str, session: AsyncSession = Depends(get_session)):
     book = await review_service.get_review(review_uid, session)
-
     if not book:
         raise
 

@@ -48,7 +48,7 @@ jobs:
           
           docker compose up -d
           sleep 10  # Wait until service starts
-          docker exec -i CONTAINER_NAME pytest --maxfail=5 --disable-warnings
+          docker exec -i fastapi-beyond-crud-web-1 pytest --maxfail=5 --disable-warnings
 
   notify-failure:
     runs-on: ubuntu-latest

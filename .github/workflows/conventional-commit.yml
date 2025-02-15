@@ -24,7 +24,7 @@ jobs:
       - name: Validate Conventional Commit
         id: validate
         run: |
-          echo "$COMMITS" | grep -Eq "^(feat|fix|chore|docs|style|refactor|perf|test|build|ci)(\(.+\))?: .{1,100}$" || exit 1
+          echo "$COMMITS" | grep -Eiq "^(feat|fix|chore|docs|style|refactor|perf|test|build|ci)(\(.+\))?: .{1,100}$" || exit 1
 
       - name: Close PR if Commit is Invalid
         if: failure()

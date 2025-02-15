@@ -1,0 +1,57 @@
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Eveyday 12AM UTC
+  workflow_dispatch:  # Manual Execution possibile
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t yourdockerhubusername/fastapi-beyond-crud:latest .
+          docker push yourdockerhubusername/fastapi-beyond-crud:latest
+
+  run-tests:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Tests
+        run: |
+          docker compose up -d
+          sleep 10  # Wait until service starts
+          docker exec -i CONTAINER_NAME pytest --maxfail=5 --disable-warnings
+
+  notify-failure:
+    runs-on: ubuntu-latest
+    needs: run-tests
+    if: failure()
+
+    steps:
+      - name: Send Email on Failure
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.ethereal.email
+          server_port: 587
+          username: ${{ secrets.ETHEREAL_USER }}
+          password: ${{ secrets.ETHEREAL_PASS }}
+          subject: "Nightly Build Failed!"
+          body: "The nightly build for fastapi-beyond-crud failed. Check the logs for details."
+          to: "hkwon7@dons.usfca.edu"
+          from: "GitHub Actions <no-reply@example.com>"
